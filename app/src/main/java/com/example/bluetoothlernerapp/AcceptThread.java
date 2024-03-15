@@ -11,7 +11,7 @@ private class AcceptThread extends Thread {
     BluetoothAdapter mBlueAdapter;
 
     private final BluetoothServerSocket mmServerSocket;
-
+//typing new crap to get a git hub
     public AcceptThread() {
         mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
         // Use a temporary object that is later assigned to mmServerSocket
