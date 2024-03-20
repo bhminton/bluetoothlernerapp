@@ -47,11 +47,20 @@ tools:context=".MainActivity">
     android:text="Get Paired Devices"
     style="@style/Base.Widget.AppCompat.Button.Colored"/>
 <!--Show paired devices here-->
+    <Button
+        android:id="@+id/connectBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Connect to Device"
+        android:onClick="onConnectButtonClick"/>
+
+
     <TextView
         android:id="@+id/pairedTv"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="300dp"
         android:minWidth="200dp"
+        android:scrollbars="vertical"
         android:text=""
         android:textColor="#000" />
 
