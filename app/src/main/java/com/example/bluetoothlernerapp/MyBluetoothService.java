@@ -24,7 +24,7 @@ public class MyBluetoothService {
         // ... (Add other message types here as needed.)
     }
 
-    private class ConnectedThread extends Thread {
+    public class ConnectedThread extends Thread {
         private final BluetoothSocket mmSocket;
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
@@ -32,6 +32,7 @@ public class MyBluetoothService {
 
         //   private void manageMyConnectedSocket (BluetoothSocket socket){
         public ConnectedThread(BluetoothSocket socket) {
+          // public void manageMyConnectedSocket ;
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -40,7 +41,7 @@ public class MyBluetoothService {
             // member streams are final.
 
 
-              //  public void manageMyConnectedSocket() {
+             //  public void manageMyConnectedSocket() {
             try {
                 tmpIn = socket.getInputStream();
             } catch (IOException e) {

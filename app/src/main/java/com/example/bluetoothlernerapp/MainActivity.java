@@ -15,6 +15,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.util.Log;
+
 
 import java.util.Set;
 
@@ -23,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int REQUEST_DISCOVER_BLUETOOTH = 1;
     private static final int BLUETOOTH_PERMISSION_REQUEST_CODE = 2;// maybe same as above
 
-
+    private static final String TAG = "MyMainActivity";
     TextView mPairedTv;
 
     Button mOnBtn, mOffBtn, mDiscoverBtn, mPairedBtn, mConnectBtn, mGattBtn;
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         mConnectBtn = findViewById(R.id.connectBtn);
 
         mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
-
+        Log.d(TAG,"screen created");
         mPairedBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             @Override
@@ -78,6 +80,7 @@ public class MainActivity extends AppCompatActivity {
 
                     BluetoothAdapter mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
 
+                Log.d(TAG,"Connect button pushed");
                     if (mBlueAdapter == null) {
                         // Device doesn't support Bluetooth
                         return;
@@ -101,15 +104,33 @@ public class MainActivity extends AppCompatActivity {
                             // Create an instance of ConnectThread
                           mmDevice = pairedDevice;
                           //  String deviceMACAddress = "74:74:46:F1:95:53";
-                         //   ConnectThread connectThread = new ConnectThread(mmDevice);
-
+                            ConnectThread connectThread = new ConnectThread(mmDevice);
+                            connectThread.start();
                             // Start the thread
-                           // connectThread.start();
-                            return; // Exit the method after starting the thread
+                            Log.i(TAG,"sending program to connect thread");
+                          // connectThread.start();
+// ++++++++++++++++goes to source code does not match byte code error   ++++++++++++++++++
+                            // when it hits return so im commenting out return
+                           // return; // Exit the method after starting the thread
+
+
+
+
+
+
+
+
+
+
+
+
+
+
                         }
                     }
-                ConnectThread connectThread = new ConnectThread(mmDevice);
-                connectThread.start();
+//                Log.d(TAG,"sending program to connect thread");
+//                ConnectThread connectThread = new ConnectThread(mmDevice);
+//                connectThread.start();
                     // If the device is not found in the list of paired devices, you might want to initiate a discovery process
                     // to find nearby devices and connect to the desired one.
                     // Refer to the Android Bluetooth documentation for implementing Bluetooth device discovery.
