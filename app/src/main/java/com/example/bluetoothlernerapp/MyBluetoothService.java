@@ -32,7 +32,7 @@ public class MyBluetoothService {
 
         //   private void manageMyConnectedSocket (BluetoothSocket socket){
         public ConnectedThread(BluetoothSocket socket) {
-          // public void manageMyConnectedSocket ;
+            // public void manageMyConnectedSocket ;
             mmSocket = socket;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
@@ -40,8 +40,8 @@ public class MyBluetoothService {
             // Get the input and output streams; using temp objects because
             // member streams are final.
 
-
-             //  public void manageMyConnectedSocket() {
+            Log.d(TAG, "Connected1");
+            //  public void manageMyConnectedSocket() {
             try {
                 tmpIn = socket.getInputStream();
             } catch (IOException e) {
@@ -55,31 +55,37 @@ public class MyBluetoothService {
 
             mmInStream = tmpIn;
             mmOutStream = tmpOut;
-     //   }
+            Log.d(TAG, "Connected2");
+
+            //   }
+            //}    }
+            //  Log.d(TAG,"Connected3");
+
         }
-
-        public void run() {
-            mmBuffer = new byte[1024];
-            int numBytes; // bytes returned from read()
-
-            // Keep listening to the InputStream until an exception occurs.
-            while (true) {
-                try {
-                    // Read from the InputStream.
-                    numBytes = mmInStream.read(mmBuffer);
-                    // Send the obtained bytes to the UI activity.
-                    Message readMsg = handler.obtainMessage(
-                            MessageConstants.MESSAGE_READ, numBytes, -1,
-                            mmBuffer);
-                    readMsg.sendToTarget();
-                } catch (IOException e) {
-                    Log.d(TAG, "Input stream was disconnected", e);
-                    break;
+            public void run () {
+                Log.d(TAG, "Connected3");
+                mmBuffer = new byte[1024];
+                int numBytes; // bytes returned from read()
+                Log.d(TAG, "Connected4");
+                // Keep listening to the InputStream until an exception occurs.
+                while (true) {
+                    try {
+                        // Read from the InputStream.
+                        numBytes = mmInStream.read(mmBuffer);
+                        // Send the obtained bytes to the UI activity.
+                        Message readMsg = handler.obtainMessage(
+                                MessageConstants.MESSAGE_READ, numBytes, -1,
+                                mmBuffer);
+                        Log.d(TAG, "Connected4");
+                        readMsg.sendToTarget();
+                    } catch (IOException e) {
+                        Log.d(TAG, "Input stream was disconnected", e);
+                        break;
+                    }
                 }
             }
-        }
 //Going to hold off on write message for now
-        // do read only
+            // do read only
 //        // Call this from the main activity to send data to the remote device.
 //        public void write(byte[] bytes) {
 //            try {
@@ -103,15 +109,16 @@ public class MyBluetoothService {
 //            }
 //        }
 
-        // Call this method from the main activity to shut down the connection.
-        public void cancel() {
-            try {
-                mmSocket.close();
-            } catch (IOException e) {
-                Log.e(TAG, "Could not close the connect socket", e);
+            // Call this method from the main activity to shut down the connection.
+            public void cancel () {
+                try {
+                    mmSocket.close();
+                } catch (IOException e) {
+                    Log.e(TAG, "Could not close the connect socket", e);
+                }
             }
         }
     }
-    }
+
 
 

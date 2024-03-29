@@ -7,6 +7,7 @@ import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothGattCallback;
+import android.bluetooth.BluetoothSocket;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -18,6 +19,7 @@ import android.widget.TextView;
 import android.util.Log;
 
 
+import java.io.IOException;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -48,7 +50,10 @@ public class MainActivity extends AppCompatActivity {
         mConnectBtn = findViewById(R.id.connectBtn);
 
         mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
-        Log.d(TAG,"screen created");
+        String tag;
+
+        Log.d(TAG,"screen");
+        System.out.println("Screen Created");
         mPairedBtn.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("MissingPermission")
             @Override
@@ -71,41 +76,48 @@ public class MainActivity extends AppCompatActivity {
             @SuppressLint("MissingPermission")
             @Override
             public void onClick(View v) {
+                BluetoothAdapter mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
 
-                @SuppressLint("MissingPermission")
-               // String deviceName = null;
-
-
-
-
-                    BluetoothAdapter mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
 
                 Log.d(TAG,"Connect button pushed");
-                    if (mBlueAdapter == null) {
-                        // Device doesn't support Bluetooth
-                        return;
-                    }
 
-                    // Check if Bluetooth is enabled
-                    if (!mBlueAdapter.isEnabled()) {
-                        // Bluetooth is not enabled, prompt the user to enable it
-                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-                        startActivity(enableBtIntent);
-                        return;
-                    }
 
-                    // Get a list of paired devices
+
+
+//
+//                the below is causing a byte code doesnt match source code error so im goint to comment it out
+//                    if (mBlueAdapter == null) {
+//                        // Device doesn't support Bluetooth
+//                        return;
+//                    }
+//
+//                    // Check if Bluetooth is enabled
+//                    if (!mBlueAdapter.isEnabled()) {
+//                        // Bluetooth is not enabled, prompt the user to enable it
+//                        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+//                        startActivity(enableBtIntent);
+//                        return;
+//                    }
+//
+//                    // Get a list of paired devices
                     Set<BluetoothDevice> pairedDevices = mBlueAdapter.getBondedDevices();
 
                     // Iterate over the list of paired devices and choose the device you want to connect to
                     for (BluetoothDevice pairedDevice : pairedDevices) {
                         // Choose your device based on its MAC address
-                        if (pairedDevice.getAddress().equals("74:74:46:F1:95:53")) {
+                       // if (pairedDevice.getAddress().equals("10:68:38:07:75:70")){
+                       if (pairedDevice.getAddress().equals("00:14:03:05:07:DF")) {
                             // Create an instance of ConnectThread
                           mmDevice = pairedDevice;
                           //  String deviceMACAddress = "74:74:46:F1:95:53";
-                            ConnectThread connectThread = new ConnectThread(mmDevice);
-                            connectThread.start();
+                            ConnectThread connectThread = null;
+                            try {
+                                connectThread = new ConnectThread(mmDevice);
+                                 connectThread.start();
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                           // connectThread.start();
                             // Start the thread
                             Log.i(TAG,"sending program to connect thread");
                           // connectThread.start();
@@ -113,10 +125,12 @@ public class MainActivity extends AppCompatActivity {
                             // when it hits return so im commenting out return
                            // return; // Exit the method after starting the thread
 
-
-
-
-
+                          //  BluetoothSocket mmSocket;
+                          //  mmSocket= null;
+                          //  MyBluetoothService.ConnectedThread connectedThread = new MyBluetoothService.ConnectedThread(mmSocket);
+                               //    MyBluetoothService.ConnectedThread connectedThread = null;
+                               //    mmSocket =
+                             // connectedThread = new MyBluetoothService.ConnectedThread(mmSocket);
 
 
 
