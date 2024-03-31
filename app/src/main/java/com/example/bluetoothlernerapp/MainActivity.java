@@ -12,6 +12,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -131,6 +134,16 @@ public class MainActivity extends AppCompatActivity {
                                //    MyBluetoothService.ConnectedThread connectedThread = null;
                                //    mmSocket =
                              // connectedThread = new MyBluetoothService.ConnectedThread(mmSocket);
+//============================================================
+
+
+                           Handler uiHandler = new Handler(Looper.getMainLooper()) {
+                               @Override
+                               public void handleMessage(Message msg) {
+                                   // Handle the message on the UI thread
+                                   // This method is executed when a message is sent to this Handler
+                               }
+                           };
 
 
 
@@ -139,6 +152,10 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
+
+
+  //========================================================
 
                         }
                     }

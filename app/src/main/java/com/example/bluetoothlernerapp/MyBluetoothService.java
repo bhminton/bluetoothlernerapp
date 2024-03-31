@@ -8,6 +8,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Arrays;
 
 public class MyBluetoothService {
 
@@ -29,11 +30,12 @@ public class MyBluetoothService {
         private final InputStream mmInStream;
         private final OutputStream mmOutStream;
         private byte[] mmBuffer; // mmBuffer store for the stream
-
+         private final Handler uiHandler;
         //   private void manageMyConnectedSocket (BluetoothSocket socket){
-        public ConnectedThread(BluetoothSocket socket) {
+        public ConnectedThread(BluetoothSocket socket, Handler handler) {
             // public void manageMyConnectedSocket ;
             mmSocket = socket;
+          uiHandler = handler;
             InputStream tmpIn = null;
             OutputStream tmpOut = null;
             //  private void manageMyConnectedSocket (BluetoothSocket socket){
@@ -62,22 +64,36 @@ public class MyBluetoothService {
             //  Log.d(TAG,"Connected3");
 
         }
-            public void run () {
+
+        public void run () {
+        //    Handler handler = new Handler();
+
+            Log.d(TAG,"Connected 2.5");
                 Log.d(TAG, "Connected3");
                 mmBuffer = new byte[1024];
+
                 int numBytes; // bytes returned from read()
-                Log.d(TAG, "Connected4");
+       //       ====================================================
+
+
+
+
+
+
                 // Keep listening to the InputStream until an exception occurs.
                 while (true) {
                     try {
                         // Read from the InputStream.
                         numBytes = mmInStream.read(mmBuffer);
+                        Log.d(TAG, "mmBuffer content: " + Arrays.toString(mmBuffer));
                         // Send the obtained bytes to the UI activity.
-                        Message readMsg = handler.obtainMessage(
+                        Message readMsg = uiHandler.obtainMessage(
                                 MessageConstants.MESSAGE_READ, numBytes, -1,
                                 mmBuffer);
+                        Log.d(TAG, "readMsg: " + readMsg);
                         Log.d(TAG, "Connected4");
-                        readMsg.sendToTarget();
+                       
+                       readMsg.sendToTarget();
                     } catch (IOException e) {
                         Log.d(TAG, "Input stream was disconnected", e);
                         break;

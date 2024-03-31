@@ -58,7 +58,8 @@ class ConnectThread extends Thread {
             // Connect to the remote device through the socket. This call blocks
             // until it succeeds or throws an exception.
             mmSocket.connect();
-            MyBluetoothService.ConnectedThread connectedThread = new MyBluetoothService().new ConnectedThread(mmSocket);
+            MyBluetoothService.ConnectedThread connectedThread = new MyBluetoothService().new ConnectedThread(mmSocket, uiHandler);
+             connectedThread.start();
         } catch (IOException connectException) {
             // Unable to connect; close the socket and return.
             Log.d(TAG, "Could not connect client socket");
