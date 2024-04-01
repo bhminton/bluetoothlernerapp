@@ -80,7 +80,20 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 BluetoothAdapter mBlueAdapter = BluetoothAdapter.getDefaultAdapter();
+                  //Handler uiHandler  = new Handler();
+                Handler uiHandler = new Handler(Looper.getMainLooper()) {
+                    @Override
+                    public void handleMessage(Message msg) {
+                        // Handle the message on the UI thread
+                        // This method is executed when a message is sent to this Handler
 
+                        // Assuming msg.obj contains the message you want to display
+                        String message = (String) msg.obj;
+
+                        // Assuming mTextBox is your TextView
+                        mPairedTv.setText(message);
+                    }
+                };
 
                 Log.d(TAG,"Connect button pushed");
 
@@ -115,8 +128,14 @@ public class MainActivity extends AppCompatActivity {
                           //  String deviceMACAddress = "74:74:46:F1:95:53";
                             ConnectThread connectThread = null;
                             try {
-                                connectThread = new ConnectThread(mmDevice);
+                                connectThread = new ConnectThread(mmDevice, uiHandler);
                                  connectThread.start();
+
+
+
+
+
+
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -136,14 +155,6 @@ public class MainActivity extends AppCompatActivity {
                              // connectedThread = new MyBluetoothService.ConnectedThread(mmSocket);
 //============================================================
 
-
-                           Handler uiHandler = new Handler(Looper.getMainLooper()) {
-                               @Override
-                               public void handleMessage(Message msg) {
-                                   // Handle the message on the UI thread
-                                   // This method is executed when a message is sent to this Handler
-                               }
-                           };
 
 
 

@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 
 
+import android.os.Handler;
 import android.util.Log;
 
 
@@ -17,13 +18,14 @@ class ConnectThread extends Thread {
     private final BluetoothSocket mmSocket;
     private final BluetoothDevice mmDevice;
     private static final String TAG = "MyActivity";
-
+    private Handler uiHandler;
     @SuppressLint("MissingPermission")
-    public ConnectThread(BluetoothDevice device) throws IOException {
+    public ConnectThread(BluetoothDevice device, Handler handler) throws IOException {
         // Use a temporary object that is later assigned to mmSocket
         // because mmSocket is final.
         BluetoothSocket tmp = null;
         mmDevice = device;
+        uiHandler = handler;
 
 
         try {
