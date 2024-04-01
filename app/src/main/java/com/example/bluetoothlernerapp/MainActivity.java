@@ -23,6 +23,7 @@ import android.util.Log;
 
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
@@ -87,11 +88,23 @@ public class MainActivity extends AppCompatActivity {
                         // Handle the message on the UI thread
                         // This method is executed when a message is sent to this Handler
 
+
+                            byte[] data = (byte[]) msg.obj; // Cast the message object to byte[]
+                            String messageString = new String(data, StandardCharsets.UTF_8); // Convert byte array to string
+                            // Proceed with processing the string...
+
+//Here's an inline link to [Google](https://www.google.com/).
+
+
+
+//                            below is a google drive link to a drawing about handlers and threads
+               //         https://drive.google.com/file/d/1ExcwmNvo0cZjjqryNEUr8Wk4gJsVcifS/view?usp=drive_link
+
                         // Assuming msg.obj contains the message you want to display
-                        String message = (String) msg.obj;
+                        //String message = (String) msg.obj;
 
                         // Assuming mTextBox is your TextView
-                        mPairedTv.setText(message);
+                        mPairedTv.setText(messageString);
                     }
                 };
 
